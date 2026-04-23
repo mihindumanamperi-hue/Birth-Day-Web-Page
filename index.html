@@ -8,14 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
 <style>
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: 'Poppins', sans-serif;
 
-    /* Background Image + Overlay */
     background: 
-        linear-gradient(rgba(255, 117, 140, 0.6), rgba(255, 126, 179, 0.6)),
-        url('5058193.jpg');
+        linear-gradient(rgba(215, 6, 223, 0.6), rgba(255, 126, 179, 0.6)),
+        url('bg.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -32,66 +36,97 @@ body {
     animation: floatUp 6s linear infinite;
 }
 
+/* Floating notes */
+.note {
+    position: fixed;
+    bottom: -20px;
+    font-size: 14px;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    animation: floatUp 8s linear infinite;
+}
+
 @keyframes floatUp {
     0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-100vh); opacity: 0; }
+    100% { transform: translateY(-110vh); opacity: 0; }
 }
 
+/* Container */
 .container {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-h1 {
-    font-size: 50px;
-    animation: fadeIn 2s ease-in-out;
-}
-
-p {
-    font-size: 20px;
-    max-width: 600px;
+    max-width: 900px;
     margin: auto;
-    animation: fadeIn 3s ease-in-out;
+    text-align: center;
+    padding: 40px 15px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Heading */
+h1 {
+    font-size: clamp(26px, 5vw, 50px);
+    margin-bottom: 15px;
 }
 
+/* Paragraph */
+p {
+    font-size: clamp(14px, 2.5vw, 20px);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* Gallery (Responsive Grid) */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+}
+
+/* Video */
+.video-container {
+    margin-top: 30px;
+}
+
+.video-container video {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+}
+
+/* Button */
 button {
     margin-top: 30px;
-    padding: 15px 30px;
+    padding: 12px 25px;
     border: none;
     border-radius: 25px;
     background: white;
     color: #ff4b7d;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    transform: scale(1.1);
+/* Messages */
+#loveMessage {
+    margin-top: 25px;
+    font-size: clamp(16px, 3vw, 22px);
+    white-space: pre-line;
 }
 
-/* Hidden message */
-.hidden {
-    display: none;
+#finalMessage {
     margin-top: 30px;
-    font-size: 22px;
-}
-
-/* Gallery */
-.gallery img {
-    width: 180px;
-    border-radius: 15px;
-    margin: 10px;
-    transition: 0.4s;
-}
-
-.gallery img:hover {
-    transform: scale(1.1);
+    font-size: clamp(14px, 2.5vw, 18px);
+    opacity: 0;
+    transition: opacity 2s ease;
 }
 </style>
 
@@ -100,7 +135,7 @@ button:hover {
 <body>
 
 <div class="container">
-    <h1>🎂 Happy 21st Birthday DINADI ❤️</h1>
+    <h1>🎂 HAPPY 21ST BIRTHDAY DINADI ❤️</h1>
 
     <p>
         For 3 years, you have been more than just a friend...  
@@ -108,44 +143,112 @@ button:hover {
         Every moment with you is a memory I’ll never forget.
     </p>
 
+    <!-- Gallery -->
     <div class="gallery">
-        <img src="photo1.jpg">
-        <img src="photo2.jpg">
-        <img src="photo3.jpg">
+        <img src="img4.jpg">
+        <img src="img7.jpg">
+        <img src="img2.jpg">
+        <img src="img3.jpg">
+        <img src="img6.jpg">
+    </div>
+
+    <!-- Video -->
+    <div class="video-container">
+        <h2>Our Memories 🎥</h2>
+        <video controls>
+            <source src="v1.mp4" type="video/mp4">
+        </video>
     </div>
 
     <button onclick="revealLove()">Click Me 🎁</button>
 
-    <p id="loveMessage" class="hidden">
-        Dinadi... ❤️  
-        I don’t know the perfect words, but I know this is true...  
-        I have fallen for you.  
-        You are not just my best friend anymore...  
-        You are someone I truly love. 💕
+    <p id="loveMessage"></p>
+
+    <p id="finalMessage">
+        This is for a small Surprised for You ! 💖<br><br>
+        - Your Loving Best Friend Mihin -
     </p>
 </div>
 
-<audio autoplay loop>
-    <source src="music.mp3" type="audio/mp3">
+<!-- AUDIO -->
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mp3">
 </audio>
 
 <script>
-// Floating hearts generator
+
+// Floating hearts
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (15 + Math.random() * 20) + "px";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 6000);
 }, 300);
 
-// Reveal message
-function revealLove() {
-    document.getElementById("loveMessage").style.display = "block";
+// Floating notes
+const notes = ["I miss you 💕","You make me smile 😊","My favorite person ❤️","Always thinking of you 💭"];
+
+setInterval(() => {
+    const note = document.createElement("div");
+    note.className = "note";
+    note.innerHTML = notes[Math.floor(Math.random() * notes.length)];
+    note.style.left = Math.random() * 90 + "vw";
+    document.body.appendChild(note);
+    setTimeout(() => note.remove(), 8000);
+}, 1200);
+
+// Typing animation
+function typeWriter(text, element, speed, callback) {
+    let i = 0;
+    element.innerHTML = "";
+
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else if (callback) callback();
+    }
+    typing();
 }
+
+// Button click
+let musicStarted = false;
+
+function revealLove() {
+    const message = document.getElementById("loveMessage");
+    const finalMsg = document.getElementById("finalMessage");
+    const music = document.getElementById("bgMusic");
+
+    if (!musicStarted) {
+        music.play().catch(() => {});
+        musicStarted = true;
+    }
+
+    const text = 
+`Happy Birthday, bestie! 🎂💖
+
+You’re one of the most beautiful souls I know.
+
+Thank you for filling my life with happiness and laughter.
+
+I’m so lucky to have you!
+
+I'm always with you...
+
+There is something I need to tell you...
+
+I have fallen for you ❤️
+
+Mihin Love's You! 💕`;
+
+    typeWriter(text, message, 40, () => {
+        finalMsg.style.opacity = "1";
+    });
+}
+
 </script>
 
 </body>
