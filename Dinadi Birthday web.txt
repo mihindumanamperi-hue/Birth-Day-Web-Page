@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Dinadi ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+
+    /* Background Image + Overlay */
+    background: 
+        linear-gradient(rgba(255, 117, 140, 0.6), rgba(255, 126, 179, 0.6)),
+        url('5058193.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+.container {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+h1 {
+    font-size: 50px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+p {
+    font-size: 20px;
+    max-width: 600px;
+    margin: auto;
+    animation: fadeIn 3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #ff4b7d;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+/* Hidden message */
+.hidden {
+    display: none;
+    margin-top: 30px;
+    font-size: 22px;
+}
+
+/* Gallery */
+.gallery img {
+    width: 180px;
+    border-radius: 15px;
+    margin: 10px;
+    transition: 0.4s;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎂 Happy 21st Birthday DINADI ❤️</h1>
+
+    <p>
+        For 3 years, you have been more than just a friend...  
+        You became my happiness, my comfort, my favorite person. 💖  
+        Every moment with you is a memory I’ll never forget.
+    </p>
+
+    <div class="gallery">
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+    </div>
+
+    <button onclick="revealLove()">Click Me 🎁</button>
+
+    <p id="loveMessage" class="hidden">
+        Dinadi... ❤️  
+        I don’t know the perfect words, but I know this is true...  
+        I have fallen for you.  
+        You are not just my best friend anymore...  
+        You are someone I truly love. 💕
+    </p>
+</div>
+
+<audio autoplay loop>
+    <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<script>
+// Floating hearts generator
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}, 300);
+
+// Reveal message
+function revealLove() {
+    document.getElementById("loveMessage").style.display = "block";
+}
+</script>
+
+</body>
+</html>
